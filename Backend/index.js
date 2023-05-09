@@ -1,6 +1,6 @@
 import  express  from "express";
 import mongoose from "mongoose";
-const authRouter = require("./Routes/Routeauth.js");
+import router from "./Routes/Routeauth.js";
 import {createPost,getPosts,updatePost,deletePost} from "./Controllers/PostControllers.js";
 
 const app = express()
@@ -16,10 +16,10 @@ mongoose.connect('mongodb+srv://mohamedalilechefabrikademy:azerty@clusterfbrk.ty
 
 
 
-const bodyParser = require("body-parser");
+import bodyParser from "body-parser";
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));   
-app.use("/api/user", authRouter);
+app.use("/api/user", router);
 
 
 app.get('/posts', createPost);

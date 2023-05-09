@@ -1,7 +1,8 @@
-const User = require("../Models/User");
-const asyncHandler = require("express-async-handler");
-const jwt = require("jsonwebtoken");
-require("dotenv").config();
+import User from"../Models/User.js";
+import asyncHandler from "express-async-handler";
+import jwt from "jsonwebtoken";
+import dotenv from 'dotenv';
+dotenv.config();
 
 //  Create a User
 const createUser = asyncHandler(async (req, res) => {
@@ -124,7 +125,7 @@ const updatedUser = asyncHandler(async (req, res) => {
   }
 });
 
-module.exports = {
+export {
   createUser,
   getaUser,
   getallUser,

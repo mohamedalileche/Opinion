@@ -1,4 +1,4 @@
-import {Post} from '../Models/Post.js';
+import Post from '../Models/Post.js';
 
 
 /////////////////////////Ajouterr/////////////////////////////////

@@ -1,6 +1,6 @@
 import  express  from "express";
 
-const {
+import {
   createUser,
   getallUser,
   getaUser,
@@ -8,8 +8,8 @@ const {
   logout,
   deleteaUser,
   updatedUser,
-} = require("../controllers/userCtrl");
-const { isAdmin, authMiddleware } = require("../middlewares/authMiddleware");
+} from "../Controllers/UserControllers.js";
+import { isAdmin, authMiddleware } from"../Middlewares/auth.js";
 
 const router = express.Router();
 
@@ -21,4 +21,4 @@ router.get("/logout", logout);
 router.delete("/:id", deleteaUser);
 router.put("/edit-user", authMiddleware, updatedUser);
 
-module.exports = router;
+export default router;
