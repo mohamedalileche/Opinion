@@ -25,18 +25,18 @@ export const getPosts = async (req, res) => {
   }
 };
 
-// export const getPostById = async (req, res) => {
-//   try {
-//     const post = await Post.findById(req.params.id).populate('author');
-//     if (!post) {
-//       return res.status(404).json({ message: 'Publication non trouvée.' });
-//     }
-//     res.status(200).json(post);
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ message: 'Erreur lors de la récupération de la publication.' });
-//   }
-// };
+export const getPostById = async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.id).populate('author');
+    if (!post) {
+      return res.status(404).json({ message: 'Publication non trouvée.' });
+    }
+    res.status(200).json(post);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Erreur lors de la récupération de la publication.' });
+  }
+};
 
 ///////////////Modifier un post////////////////
 export const updatePost = async (req, res) => {

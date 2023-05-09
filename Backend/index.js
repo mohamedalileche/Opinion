@@ -1,7 +1,7 @@
 import  express  from "express";
 import mongoose from "mongoose";
 const authRouter = require("./Routes/Routeauth.js");
-import {createPost,getPosts,updatePost,deletePost} from "./Controllers/authorControllers.js";
+import {createPost,getPosts,updatePost,deletePost} from "./Controllers/PostControllers.js";
 
 const app = express()
 app.use(express.json());
