@@ -1,34 +1,30 @@
-import User from "../Models/User.js";
-import jwt from "jsonwebtoken";
-import asyncHandler from "express-async-handler";
 
-const authMiddleware = asyncHandler(async (req, res, next) => {
-  let token;
-  if (req?.headers?.authorization?.startsWith("Bearer")) {
-    token = req.headers.authorization.split(" ")[1];
-    try {
-      if (token) {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        const user = await User.findById(decoded?.id);
-        req.user = user;
-        next();
-      }
-    } catch (error) {
-      throw new Error(" Not authorized token expired, Please Loging again");
-    }
-  } else {
-    throw new Error(" there is no token attached to the header");
+import jwt from "jsonwebtoken"
+
+const {sign, verify} = jwt
+
+export const createToken = (userId) => {
+  const authToken = sign({userId}, process.env.SECRET_KEY, {expiresIn: "5d"})
+
+  return authToken
+}
+
+export const userAuthValidation = (req, res, next) => {
+  const cookieToken = req.cookies["authToken"]
+  
+  if (cookieToken === undefined) {
+    throw Error("no auth for this action")
   }
-});
 
-const isAdmin = asyncHandler(async (req, res, next) => {
-  const { email } = req.user;
-  const adminUser = await User.findOne({ email });
-  if (adminUser.role !== "admin") {
-    throw new Error("You are not an admin");
-  } else {
-    next();
+  const authToken = cookieToken.authToken
+
+  if (!authToken) {
+    throw Error("no auth for this action")
   }
-});
-
-export { authMiddleware, isAdmin };
+  const decodedToken = verify(authToken, process.env.SECRET_KEY)
+  if (!decodedToken) {
+    throw Error("no auth for this action")
+  }
+  res.locals.userId = decodedToken.userId
+  next()
+}
